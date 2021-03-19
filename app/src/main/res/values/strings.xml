@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MoviesApp</string>
+    <string name="app_name_r">®</string>
+    <string name="please_wait">Please Wait</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
