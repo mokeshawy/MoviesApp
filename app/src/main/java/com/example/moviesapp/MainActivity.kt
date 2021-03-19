@@ -3,9 +3,13 @@ package com.example.moviesapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.databinding.ActivityMainBinding
+import com.example.moviesapp.favoritesfragment.FavoritesFragment
+import com.example.moviesapp.latestmoviesfragment.LatestMoviesFragment
 
 class MainActivity : AppCompatActivity() {
 

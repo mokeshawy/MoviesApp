@@ -11,8 +11,8 @@
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splashFragment_to_latestMoviesFragment"
-            app:destination="@id/latestMoviesFragment"
+            android:id="@+id/action_splashFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
             app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
@@ -25,4 +25,9 @@
         android:name="com.example.moviesapp.favoritesfragment.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="com.example.moviesapp.viewpagerfragment.ViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager" />
 </navigation>

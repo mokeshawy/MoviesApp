@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
+import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentLatestMoviesBinding
 import com.example.moviesapp.latestmoviesfragment.LatestMoviesFragmentViewModel
 
@@ -27,5 +29,10 @@ class LatestMoviesFragment : Fragment() {
         binding.lifecycleOwner          = this
         binding.latestMoviesVarModel    = latestMoviesViewModel
 
+        val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_fragmentId)
+
+        view.setOnClickListener {
+            viewPager?.currentItem = 1
+        }
     }
 }

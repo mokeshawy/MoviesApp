@@ -21,6 +21,6 @@ class SplashFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         @Suppress("DEPRECATION")
-        Handler().postDelayed( { findNavController().navigate(R.id.action_splashFragment_to_latestMoviesFragment) } , 2000)
+        Handler().postDelayed( { findNavController().navigate(R.id.action_splashFragment_to_viewPagerFragment) } , 2000)
     }
 }
