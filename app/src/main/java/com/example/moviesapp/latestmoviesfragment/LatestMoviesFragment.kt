@@ -26,5 +26,6 @@ class LatestMoviesFragment : Fragment() {
         // Connect whit view model
         binding.lifecycleOwner          = this
         binding.latestMoviesVarModel    = latestMoviesViewModel
+
     }
 }
