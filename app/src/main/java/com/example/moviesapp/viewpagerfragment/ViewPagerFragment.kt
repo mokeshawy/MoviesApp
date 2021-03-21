@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.moviesapp.R
-import com.example.moviesapp.ViewPagerAdapter
 import com.example.moviesapp.databinding.FragmentViewPagerBinding
 import com.example.moviesapp.favoritesfragment.FavoritesFragment
 import com.example.moviesapp.latestmoviesfragment.LatestMoviesFragment
@@ -24,14 +22,14 @@ class ViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        
         var fragmentList = arrayListOf<Fragment>(
 
             LatestMoviesFragment(),
             FavoritesFragment()
         )
 
-        val adapter = ViewPagerAdapter(fragmentList , requireActivity().supportFragmentManager , lifecycle)
+        val adapter = ViewPagerAdapter(fragmentList, requireActivity().supportFragmentManager, lifecycle)
 
         binding.viewPagerFragmentId.adapter = adapter
     }

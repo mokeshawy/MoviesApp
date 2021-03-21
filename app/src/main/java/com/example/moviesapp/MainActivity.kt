@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             when(destination.id){
 
                 R.id.splashFragment         -> supportActionBar!!.hide()
-                R.id.latestMoviesFragment   -> supportActionBar!!.hide()
+                R.id.viewPagerFragment      -> supportActionBar!!.hide()
 
                 else-> supportActionBar!!.show()
             }
