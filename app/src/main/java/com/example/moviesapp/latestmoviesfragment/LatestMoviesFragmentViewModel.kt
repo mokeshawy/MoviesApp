@@ -16,7 +16,7 @@ class LatestMoviesFragmentViewModel : ViewModel(){
 
         CoroutineScope(Dispatchers.IO).async {
 
-            var response = ServiceBuilder.makeRetrofit().getLatestMoves("apple" , "2021-03-20" , "2021-03-20" , "popularity" , "9b3d814ad7e840fa97fa9608886787f5")
+            var response = ServiceBuilder.makeRetrofit().getLatestMoves( "342b8c3dcf19a60e32e83e086f6df5a5" )
 
             CoroutineScope(Dispatchers.Main).async {
 

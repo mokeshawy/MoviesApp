@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentFavoritesBinding
@@ -28,10 +29,16 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.favoritesVarModel = favoritesViewModel
 
+        // Operation work for viewPager2
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_fragmentId)
-
         view.setOnClickListener {
             viewPager?.currentItem = 2
         }
+
+        favoritesViewModel.showFavData(requireActivity())
+        favoritesViewModel.dataForFavMovies.observe(viewLifecycleOwner, Observer {
+            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it)
+
+        })
     }
 }

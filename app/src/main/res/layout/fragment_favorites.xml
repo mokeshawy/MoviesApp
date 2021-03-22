@@ -38,6 +38,19 @@
                     android:textColor="@color/colorWhite"/>
             </androidx.appcompat.widget.Toolbar>
 
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_view_moviesId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tl_bar_latestMoviesId"
+                app:layout_constraintVertical_bias="0.12"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

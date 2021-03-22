@@ -1,23 +1,25 @@
 package com.example.moviesapp.latestmoviesfragment
 
 data class LatestMoviesResponse(
-    val articles: List<Article>,
-    val status: String,
-    val totalResults: Int
+    val page: Int,
+    val results: List<Result>,
+    val total_pages: Int,
+    val total_results: Int
 )
 
-data class Article(
-    val author: String,
-    val content: String,
-    val description: String,
-    val publishedAt: String,
-    val source: Source,
+data class Result(
+    val adult: Boolean,
+    val backdrop_path: String,
+    val genre_ids: List<Int>,
+    val id: Int,
+    val original_language: String,
+    val original_title: String,
+    val overview: String,
+    val popularity: Double,
+    val poster_path: String,
+    val release_date: String,
     val title: String,
-    val url: String,
-    val urlToImage: String
-)
-
-data class Source(
-    val id: String,
-    val name: String
+    val video: Boolean,
+    val vote_average: Double,
+    val vote_count: Int
 )
