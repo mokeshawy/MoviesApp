@@ -12,7 +12,6 @@ data class MoviesModel (
 
     @ColumnInfo(name = "poster_path")
     var poster_path : String
-
 ){
 
     @PrimaryKey(autoGenerate = true)

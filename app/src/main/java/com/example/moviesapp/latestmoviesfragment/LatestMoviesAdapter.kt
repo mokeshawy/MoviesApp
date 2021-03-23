@@ -1,34 +1,31 @@
 package com.example.moviesapp.latestmoviesfragment
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.example.moviesapp.databinding.LatestMoviesItemBinding
-import com.example.moviesapp.operationroomdb.AppDataBase
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 
-class LatestMoviesAdapter(private val dataSet: List<Result> , var context: Context) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
+class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMoviesItemClickListener) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
 
+    // BaseUrl fro operation photo
     companion object{
         var BASE_URL = "https://image.tmdb.org/t/p/w500"
     }
+
     class ViewHolder(var binding: LatestMoviesItemBinding ) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
+        // Initialize fun for data from model
+        fun initialize( dataSet: Result , action : OnMoviesItemClickListener ){
 
+            binding.tvTitleLatestMoviesId.text    = dataSet.title
+            Picasso.get().load(BASE_URL+dataSet.poster_path).into(binding.ivPosterMoviesId)
+
+            // Set onClick for itemView
+            binding.toggleImButtonId.setOnClickListener {
+                action.onMoviesClick(dataSet , adapterPosition)
+            }
         }
-    }
-
-    // Interface onclick listener
-    interface OnItemClickListener{
-        fun onItemClick(position: Int)
     }
 
     // Create new views (invoked by the layout manager)
@@ -46,35 +43,17 @@ class LatestMoviesAdapter(private val dataSet: List<Result> , var context: Conte
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        viewHolder.binding.tvTitleLatestMoviesId.text    = dataSet[position].title
-        Picasso.get().load(BASE_URL+dataSet[position].poster_path).into(viewHolder.binding.ivPosterMoviesId)
-
-        viewHolder.binding.toggleImButtonId.setOnClickListener {
-
-            if(viewHolder.binding.toggleImButtonId.isChecked){
-
-                CoroutineScope(Dispatchers.IO).async {
-                    var dataBase : AppDataBase = Room.databaseBuilder(context , AppDataBase::class.java,"FavoriteMovies").build()
-                    var insertFavMovies = MoviesModel(dataSet[position].title , BASE_URL+dataSet[position].poster_path)
-                    CoroutineScope(Dispatchers.Main).async {
-                        var title = dataBase.moviesDao().getTitle(dataSet[position].title)
-                        if(title.size == 1){
-                            Toast.makeText(context , "${dataSet[position].title} Save to favorite" , Toast.LENGTH_SHORT).show()
-                        }else{
-                            dataBase.moviesDao().insertFavorite(insertFavMovies)
-                        }
-                    }
-                }
-                Toast.makeText(context , "Save ${dataSet[position].title}" , Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(context , "${dataSet[position].title} UnSaved" , Toast.LENGTH_SHORT).show()
-            }
-
-        }
-
+        viewHolder.initialize(dataSet.get(position) , onClickListener)
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+
+    // The interface for click on the item
+    interface OnMoviesItemClickListener{
+
+        fun onMoviesClick(dataSet : Result , position: Int)
+    }
 
 }

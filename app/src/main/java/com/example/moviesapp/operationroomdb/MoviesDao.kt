@@ -14,6 +14,6 @@ interface MoviesDao {
     @Query("SELECT * FROM MoviesModel")
     suspend fun getAllFav() : List<MoviesModel>
 
-    @Query("SELECT * FROM MoviesModel WHERE title =:title")
-    suspend fun getTitle( title : String) : List<MoviesModel>
+    @Query("SELECT * FROM MoviesModel WHERE title =:title ")
+    suspend fun getTitle( title : String ) : List<MoviesModel>
 }
