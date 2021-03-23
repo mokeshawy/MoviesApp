@@ -1,9 +1,11 @@
 package com.example.moviesapp.favoritesfragment
 
 import android.content.Context
+import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.room.Room
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.moviesapp.latestmoviesfragment.MoviesModel
 import com.example.moviesapp.operationroomdb.AppDataBase
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +16,8 @@ class FavoritesFragmentViewModel : ViewModel() {
 
     var dataForFavMovies = MutableLiveData<List<MoviesModel>>()
 
-    fun showFavData( context: Context){
+    // Function select data from room database
+    fun showFavData( context: Context ){
 
         CoroutineScope(Dispatchers.IO).launch{
 
@@ -24,6 +27,20 @@ class FavoritesFragmentViewModel : ViewModel() {
 
                 dataForFavMovies.value = dataBase.moviesDao().getAllFav()
             }
+        }
+    }
+
+    // Refresh function for update select new data entry room database
+    fun refresh(context: Context , swipeLayout : SwipeRefreshLayout){
+
+        swipeLayout.setOnRefreshListener {
+
+            showFavData(context)
+
+            @Suppress("DEPRECATION")
+            Handler().postDelayed(Runnable {
+                swipeLayout.isRefreshing = false
+            }, 2500)
         }
     }
 }

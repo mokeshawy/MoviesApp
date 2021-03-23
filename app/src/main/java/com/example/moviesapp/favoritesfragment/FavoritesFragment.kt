@@ -1,6 +1,7 @@
 package com.example.moviesapp.favoritesfragment
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,10 +36,13 @@ class FavoritesFragment : Fragment() {
             viewPager?.currentItem = 2
         }
 
+        // Call function for show data from room database
         favoritesViewModel.showFavData(requireActivity())
         favoritesViewModel.dataForFavMovies.observe(viewLifecycleOwner, Observer {
             binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it)
-
         })
+
+        // Call fun for refresh
+        favoritesViewModel.refresh(requireActivity() , binding.swipeLayout)
     }
 }

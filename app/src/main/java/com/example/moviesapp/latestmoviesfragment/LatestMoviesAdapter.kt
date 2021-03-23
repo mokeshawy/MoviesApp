@@ -18,7 +18,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
         // Initialize fun for data from model
         fun initialize( dataSet: Result , action : OnMoviesItemClickListener ){
 
-            binding.tvTitleLatestMoviesId.text    = dataSet.title
+            binding.tvTitleLatestMoviesId.text  = dataSet.title
             Picasso.get().load(BASE_URL+dataSet.poster_path).into(binding.ivPosterMoviesId)
 
             // Set onClick for itemView

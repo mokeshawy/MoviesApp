@@ -39,17 +39,22 @@
             </androidx.appcompat.widget.Toolbar>
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rc_view_moviesId"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_height="670dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tl_bar_latestMoviesId"
-                app:layout_constraintVertical_bias="0.12"/>
+                app:layout_constraintTop_toBottomOf="@+id/tl_bar_latestMoviesId">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rc_view_moviesId"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

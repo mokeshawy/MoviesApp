@@ -17,14 +17,13 @@ import com.example.moviesapp.operationroomdb.AppDataBase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlin.Result
 
 class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickListener{
 
     lateinit var binding        : FragmentLatestMoviesBinding
     val latestMoviesViewModel   : LatestMoviesFragmentViewModel by viewModels()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         binding = FragmentLatestMoviesBinding.inflate(inflater)
         return binding.root
