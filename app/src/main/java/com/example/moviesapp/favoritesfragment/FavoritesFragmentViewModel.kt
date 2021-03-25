@@ -31,16 +31,14 @@ class FavoritesFragmentViewModel : ViewModel() {
     }
 
     // Refresh function for update select new data entry room database
-    fun refresh(context: Context , swipeLayout : SwipeRefreshLayout){
+    fun refresh(context: Context , swipeRefreshLayout : SwipeRefreshLayout){
 
-        swipeLayout.setOnRefreshListener {
+        swipeRefreshLayout.setOnRefreshListener {
 
             showFavData(context)
 
             @Suppress("DEPRECATION")
-            Handler().postDelayed(Runnable {
-                swipeLayout.isRefreshing = false
-            }, 2500)
+            Handler().postDelayed(Runnable { swipeRefreshLayout.isRefreshing = false }, 2500)
         }
     }
 }

@@ -48,7 +48,7 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
          // Show response from API in recycler view
         latestMoviesViewModel.viewDataForLatestMovies()
         latestMoviesViewModel.moviesDetails.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this)
+            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity())
             
         })
     }
@@ -56,14 +56,17 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
     override fun onMoviesClick(dataSet: com.example.moviesapp.latestmoviesfragment.Result, position: Int) {
 
             CoroutineScope(Dispatchers.IO).async {
+
                 var dataBase : AppDataBase = Room.databaseBuilder(requireActivity() , AppDataBase::class.java,"FavoriteMovies").build()
                 var insertFavMovies = MoviesModel(dataSet.title , BASE_URL+dataSet.poster_path)
+
                 CoroutineScope(Dispatchers.Main).async {
                     var title = dataBase.moviesDao().getTitle(dataSet.title )
                     if(title.size == 1){
 
                         Toast.makeText(context , "${dataSet.title} Already Save to favorite" , Toast.LENGTH_SHORT).show()
-                    }else{
+                    }else if( title.size != 1){
+
                         dataBase.moviesDao().insertFavorite(insertFavMovies)
                         Toast.makeText(context , "Save ${dataSet.title}" , Toast.LENGTH_SHORT).show()
                     }
