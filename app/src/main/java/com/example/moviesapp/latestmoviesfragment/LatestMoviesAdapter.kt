@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.example.moviesapp.Constants
 import com.example.moviesapp.databinding.LatestMoviesItemBinding
 import com.example.moviesapp.operationroomdb.AppDataBase
+import com.example.moviesapp.operationroomdb.MoviesDao
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMoviesItemClickListener , var context: Context) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
+class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMoviesItemClickListener ,
+                          var context: Context) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
 
     // BaseUrl fro operation photo
     companion object{
@@ -24,7 +28,9 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
 
     class ViewHolder(var binding: LatestMoviesItemBinding ) : RecyclerView.ViewHolder(binding.root) {
 
+        // Fixed checkBox problem for select tow item where we need select one item only
         var checkBoxStateArray = SparseBooleanArray()
+
 
         // Initialize fun for data from model
         fun initialize( dataSet: Result , action : OnMoviesItemClickListener ){
@@ -34,7 +40,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
             binding.tvTitleLatestMoviesId.text  = dataSet.title
             Picasso.get().load(BASE_URL+dataSet.poster_path).into(binding.ivPosterMoviesId)
 
-            // Set onClick for itemView
+            // onClickListener for heart button
             binding.toggleImButtonId.setOnClickListener {
 
                 if(! checkBoxStateArray.get(adapterPosition , false)){
@@ -43,9 +49,19 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
                     binding.toggleImButtonId.isChecked = true
                     checkBoxStateArray.put(adapterPosition , true)
 
+
                 }else{
                     binding.toggleImButtonId.isChecked = false
                     checkBoxStateArray.put(adapterPosition , false)
+                    CoroutineScope(Dispatchers.IO).async {
+
+                        // Call fun delete item from favorite
+                        var dataBase : AppDataBase = Room.databaseBuilder(itemView.context , AppDataBase::class.java , Constants.ROOM_DB_NAME).build()
+
+                        CoroutineScope(Dispatchers.Main).async {
+                            dataBase.moviesDao().deleteItems(dataSet.title)
+                        }
+                    }
                     Toast.makeText(itemView.context , "Un Save ${dataSet.title}" , Toast.LENGTH_SHORT).show()
                 }
             }
@@ -58,7 +74,6 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
         var myViewHolder = ViewHolder(LatestMoviesItemBinding.inflate(LayoutInflater.from(viewGroup.context), viewGroup, false) )
 
         return myViewHolder
-
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -67,13 +82,14 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        // Call function initialize
 
+        // Call function initialize
         viewHolder.initialize(dataSet.get(position) , onClickListener)
 
+        // Save check box for favorite select after off app and on again
         CoroutineScope(Dispatchers.IO).launch{
 
-            var dataBase : AppDataBase = Room.databaseBuilder( context , AppDataBase::class.java,"FavoriteMovies").build()
+            var dataBase : AppDataBase = Room.databaseBuilder( context , AppDataBase::class.java,Constants.ROOM_DB_NAME).build()
 
             CoroutineScope(Dispatchers.Main).launch {
 
@@ -81,16 +97,21 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
 
                 for( select in data){
 
-                    var id = select.id
+                    var title = select.title
 
-                    if(id.toString().toInt() == position+1 ) {
+                    if(title == dataSet[position].title ) {
 
                         viewHolder.binding.toggleImButtonId.isChecked = true
                     }
                 }
             }
         }
+
+        viewHolder.binding.cardLayoutId.setOnClickListener {
+            Toast.makeText(context , dataSet[position].title,Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size

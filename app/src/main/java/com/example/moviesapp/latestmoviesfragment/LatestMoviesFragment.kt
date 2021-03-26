@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
+import com.example.moviesapp.Constants
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentLatestMoviesBinding
 import com.example.moviesapp.latestmoviesfragment.LatestMoviesAdapter.Companion.BASE_URL
@@ -57,7 +58,7 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
 
             CoroutineScope(Dispatchers.IO).async {
 
-                var dataBase : AppDataBase = Room.databaseBuilder(requireActivity() , AppDataBase::class.java,"FavoriteMovies").build()
+                var dataBase : AppDataBase = Room.databaseBuilder(requireActivity() , AppDataBase::class.java, Constants.ROOM_DB_NAME).build()
                 var insertFavMovies = MoviesModel(dataSet.title , BASE_URL+dataSet.poster_path)
 
                 CoroutineScope(Dispatchers.Main).async {

@@ -39,7 +39,7 @@ class FavoritesFragment : Fragment() {
         // Call function for show data from room database
         favoritesViewModel.showFavData(requireActivity())
         favoritesViewModel.dataForFavMovies.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it)
+            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it , requireActivity())
         })
 
         // Call fun for refresh

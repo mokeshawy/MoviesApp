@@ -1,13 +1,22 @@
 package com.example.moviesapp.favoritesfragment
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
+import com.example.moviesapp.Constants
 import com.example.moviesapp.databinding.FavoriteMoviesItemBinding
 import com.example.moviesapp.latestmoviesfragment.MoviesModel
+import com.example.moviesapp.operationroomdb.AppDataBase
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel>) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
+class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
 
     class ViewHolder(var binding: FavoriteMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -33,6 +42,46 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel>) : RecyclerV
 
         viewHolder.binding.tvTitleLatestMoviesId.text = dataSet[position].title
         Picasso.get().load(dataSet[position].poster_path).into(viewHolder.binding.ivPosterMoviesId)
+
+
+        // Save check box for favorite select after off app and on again
+        CoroutineScope(Dispatchers.IO).launch{
+
+            var dataBase : AppDataBase = Room.databaseBuilder( context , AppDataBase::class.java, Constants.ROOM_DB_NAME).build()
+
+            CoroutineScope(Dispatchers.Main).launch {
+
+                var data =  dataBase.moviesDao().getAllFav()
+
+                for( select in data){
+
+                    var title = select.title
+
+                    if(title == dataSet[position].title ) {
+
+                        viewHolder.binding.toggleImButtonId.isChecked = true
+                    }
+                }
+            }
+        }
+
+        // UnaSave item in favorite page 
+        viewHolder.binding.toggleImButtonId.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).async {
+
+                // Call fun delete item from favorite
+                var dataBase : AppDataBase = Room.databaseBuilder(context , AppDataBase::class.java , Constants.ROOM_DB_NAME).build()
+
+                CoroutineScope(Dispatchers.Main).async {
+                    dataBase.moviesDao().deleteItems(dataSet[position].title)
+                }
+            }
+            Toast.makeText(context,"Un Save ${dataSet[position].title}",Toast.LENGTH_SHORT).show()
+        }
+
+        viewHolder.binding.cardLayoutId.setOnClickListener {
+            Toast.makeText(context , dataSet[position].title, Toast.LENGTH_SHORT).show()
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

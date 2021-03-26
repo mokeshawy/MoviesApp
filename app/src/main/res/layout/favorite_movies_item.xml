@@ -8,12 +8,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="580dp">
+        android:layout_height="690dp">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_layoutId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -25,6 +28,19 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/app_gradinet_color_background">
 
+                <com.example.yshop.utils.MSPTextViewBold
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/top_title_desc"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/title_for_film"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/iv_poster_moviesId"
                     android:layout_width="match_parent"
@@ -32,7 +48,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.18" />
 
                 <com.example.yshop.utils.MSPTextViewBold
                     android:id="@+id/tv_title_latestMoviesId"
@@ -44,10 +61,10 @@
                     android:textSize="@dimen/title_for_film"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.096"
+                    app:layout_constraintHorizontal_bias="0.111"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.968" />
+                    app:layout_constraintVertical_bias="0.98" />
 
                 <ToggleButton
                     android:id="@+id/toggle_Im_ButtonId"
@@ -61,10 +78,10 @@
                     app:layout_constraintHorizontal_bias="0.95"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.98" />
+                    app:layout_constraintVertical_bias="0.99" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
