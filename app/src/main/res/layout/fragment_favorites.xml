@@ -32,10 +32,10 @@
                 <com.example.yshop.utils.MSPTextViewBold
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/title_favorite_movies"
                     android:gravity="center"
-                    android:textSize="@dimen/title_toll_bar"
-                    android:textColor="@color/colorWhite"/>
+                    android:text="@string/title_favorite_movies"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/title_toll_bar" />
             </androidx.appcompat.widget.Toolbar>
 
 
@@ -51,9 +51,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rc_view_moviesId"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

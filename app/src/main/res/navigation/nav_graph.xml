@@ -20,7 +20,11 @@
         android:id="@+id/viewPagerFragment"
         android:name="com.example.moviesapp.viewpagerfragment.ViewPagerFragment"
         android:label="fragment_view_pager"
-        tools:layout="@layout/fragment_view_pager" />
+        tools:layout="@layout/fragment_view_pager" >
+        <action
+            android:id="@+id/action_viewPagerFragment_to_detailsMoviesFragment"
+            app:destination="@id/detailsMoviesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/latestMoviesFragment"
         android:name="com.example.moviesapp.latestmoviesfragment.LatestMoviesFragment"
@@ -31,5 +35,10 @@
         android:name="com.example.moviesapp.favoritesfragment.FavoritesFragment"
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" />
+    <fragment
+        android:id="@+id/detailsMoviesFragment"
+        android:name="com.example.moviesapp.datailsmoviesfragment.DetailsMoviesFragment"
+        android:label="fragment_details_movies"
+        tools:layout="@layout/fragment_details_movies" />
 
 </navigation>

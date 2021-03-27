@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.Constants
@@ -19,7 +21,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickListener{
+class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickListener , LatestMoviesAdapter.OnClickListener{
 
     lateinit var binding        : FragmentLatestMoviesBinding
     val latestMoviesViewModel   : LatestMoviesFragmentViewModel by viewModels()
@@ -38,8 +40,6 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
         binding.latestMoviesVarModel    = latestMoviesViewModel
 
 
-
-
         // Operation work for viewPager2
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_fragmentId)
         view.setOnClickListener {
@@ -49,13 +49,14 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
          // Show response from API in recycler view
         latestMoviesViewModel.viewDataForLatestMovies()
         latestMoviesViewModel.moviesDetails.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity())
+            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity() , this)
             
         })
+
+
     }
 
     override fun onMoviesClick(dataSet: com.example.moviesapp.latestmoviesfragment.Result, position: Int) {
-
             CoroutineScope(Dispatchers.IO).async {
 
                 var dataBase : AppDataBase = Room.databaseBuilder(requireActivity() , AppDataBase::class.java, Constants.ROOM_DB_NAME).build()
@@ -63,16 +64,18 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
 
                 CoroutineScope(Dispatchers.Main).async {
                     var title = dataBase.moviesDao().getTitle(dataSet.title )
+                    // Check item add already in favorite or no
                     if(title.size == 1){
-
-                        Toast.makeText(context , "${dataSet.title} Already Save to favorite" , Toast.LENGTH_SHORT).show()
-                    }else if( title.size != 1){
-
+                        //Toast.makeText(context , "${dataSet.title} Already Save to favorite" , Toast.LENGTH_SHORT).show()
+                    }else{
                         dataBase.moviesDao().insertFavorite(insertFavMovies)
-                        Toast.makeText(context , "Save ${dataSet.title}" , Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context , "Save ${dataSet.title}" , Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+    }
 
+    override fun onClickListener() {
+        findNavController().navigate(R.id.action_viewPagerFragment_to_detailsMoviesFragment)
     }
 }

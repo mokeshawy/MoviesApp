@@ -16,13 +16,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
+class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> ,
+                             var onClick : OnClickListener ,
+                             var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
 
     class ViewHolder(var binding: FavoriteMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        init {
+        fun initOnClick( action : OnClickListener){
 
+            binding.cardLayoutId.setOnClickListener {
+                action.onClick()
+            }
         }
+
     }
 
     // Create new views (invoked by the layout manager)
@@ -43,6 +49,8 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var contex
         viewHolder.binding.tvTitleLatestMoviesId.text = dataSet[position].title
         Picasso.get().load(dataSet[position].poster_path).into(viewHolder.binding.ivPosterMoviesId)
 
+        // Call fun initOnClick
+        viewHolder.initOnClick(onClick)
 
         // Save check box for favorite select after off app and on again
         CoroutineScope(Dispatchers.IO).launch{
@@ -65,7 +73,7 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var contex
             }
         }
 
-        // UnaSave item in favorite page 
+        // UnaSave item in favorite page
         viewHolder.binding.toggleImButtonId.setOnClickListener {
             CoroutineScope(Dispatchers.IO).async {
 
@@ -76,15 +84,14 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var contex
                     dataBase.moviesDao().deleteItems(dataSet[position].title)
                 }
             }
-            Toast.makeText(context,"Un Save ${dataSet[position].title}",Toast.LENGTH_SHORT).show()
-        }
-
-        viewHolder.binding.cardLayoutId.setOnClickListener {
-            Toast.makeText(context , dataSet[position].title, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context,"Un Save ${dataSet[position].title}",Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of your dataSet (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
 
+    interface OnClickListener{
+        fun onClick()
+    }
 }

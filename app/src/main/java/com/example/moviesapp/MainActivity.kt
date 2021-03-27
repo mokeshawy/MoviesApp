@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.databinding.ActivityMainBinding
 import com.example.moviesapp.favoritesfragment.FavoritesFragment
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment : NavHostFragment   = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController   : NavController     = navHostFragment.navController
 
+        //setupActionBarWithNavController(findNavController(R.id.nav_host_fragment))
 
         // Mange show action bar
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -30,10 +33,19 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.splashFragment         -> supportActionBar!!.hide()
                 R.id.viewPagerFragment      -> supportActionBar!!.hide()
+                R.id.latestMoviesFragment   -> supportActionBar!!.hide()
+                R.id.favoritesFragment      -> supportActionBar!!.hide()
+                R.id.detailsMoviesFragment  -> supportActionBar!!.hide()
 
                 else-> supportActionBar!!.show()
             }
         }
+    }
 
+    override fun onSupportNavigateUp(): Boolean {
+
+        val navController = findNavController(R.id.nav_host_fragment)
+
+        return navController.navigateUp() ||  super.onSupportNavigateUp()
     }
 }

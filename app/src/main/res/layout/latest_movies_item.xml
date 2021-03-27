@@ -9,11 +9,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="690dp">
+            android:layout_height="600dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_layoutId"
-            android:layout_width="match_parent"
+            android:layout_width="320dp"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             app:cardCornerRadius="20dp"
@@ -69,8 +69,8 @@
 
                 <ToggleButton
                     android:id="@+id/toggle_Im_ButtonId"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:background="@drawable/toggle_selector"
                     android:textOff=""
                     android:textOn=""

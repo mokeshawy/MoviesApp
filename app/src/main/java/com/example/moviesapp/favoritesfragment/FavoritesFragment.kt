@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentFavoritesBinding
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment() , FavoriteMoviesAdapter.OnClickListener {
 
     lateinit var binding    : FragmentFavoritesBinding
     val favoritesViewModel  : FavoritesFragmentViewModel by viewModels()
@@ -30,6 +31,7 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.favoritesVarModel = favoritesViewModel
 
+
         // Operation work for viewPager2
         val viewPager = activity?.findViewById<ViewPager2>(R.id.view_pager_fragmentId)
         view.setOnClickListener {
@@ -39,10 +41,14 @@ class FavoritesFragment : Fragment() {
         // Call function for show data from room database
         favoritesViewModel.showFavData(requireActivity())
         favoritesViewModel.dataForFavMovies.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it , requireActivity())
+            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it , this , requireActivity())
         })
 
         // Call fun for refresh
         favoritesViewModel.refresh(requireActivity() , binding.swipeLayout)
+    }
+
+    override fun onClick() {
+        findNavController().navigate(R.id.action_viewPagerFragment_to_detailsMoviesFragment)
     }
 }

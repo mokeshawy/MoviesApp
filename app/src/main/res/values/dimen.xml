@@ -11,7 +11,7 @@
 
     <dimen name="title_toll_bar">20sp</dimen>
 
-    <dimen name="title_for_film">20sp</dimen>
+    <dimen name="title_for_film">15sp</dimen>
 
 
 </resources>
