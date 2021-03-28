@@ -44,6 +44,11 @@
         <argument
             android:name="moviesDetails"
             app:argType="com.example.moviesapp.latestmoviesfragment.Result" />
+        <action
+            android:id="@+id/action_detailsMoviesFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:enterAnim="@anim/from_left"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
 
 </navigation>

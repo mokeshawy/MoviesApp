@@ -9,11 +9,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="600dp">
+            android:layout_height="710dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_layoutId"
-            android:layout_width="320dp"
+            android:layout_width="400dp"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
             app:cardCornerRadius="20dp"
@@ -62,10 +62,10 @@
                     android:textSize="@dimen/title_for_film"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.111"
+                    app:layout_constraintHorizontal_bias="0.112"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.98" />
+                    app:layout_constraintVertical_bias="0.989" />
 
                 <ToggleButton
                     android:id="@+id/toggle_Im_ButtonId"

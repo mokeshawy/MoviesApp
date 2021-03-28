@@ -17,17 +17,145 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- TODO: Update blank fragment layout -->
-            <TextView
-                android:id="@+id/title_movies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25dp"
-                android:text="@string/hello_blank_fragment"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/tl_bar_details"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <com.example.yshop.utils.MSPTextViewBold
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/title_details_movies"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/title_toll_bar" />
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_layoutId"
+                android:layout_width="400dp"
+                android:layout_height="670dp"
+                android:layout_margin="20dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/tl_bar_details"
+                app:layout_constraintVertical_bias="0.48000002">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/app_gradinet_color_background">
+
+
+                    <ImageView
+                        android:id="@+id/iv_poster_moviesId"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.050000012" />
+
+                    <LinearLayout
+                        android:id="@+id/ly_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_poster_moviesId">
+
+                        <com.example.yshop.utils.MSPTextViewRegular
+                            android:id="@+id/MSPTextViewRegular2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_for_title"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/title_for_title_text_size" />
+
+                        <com.example.yshop.utils.MSPTextViewRegular
+                            android:id="@+id/tv_title_movies"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/title_text_size"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ly_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ly_title">
+
+                        <com.example.yshop.utils.MSPTextViewRegular
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/title_for_date"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/title_for_title_text_size" />
+
+                        <com.example.yshop.utils.MSPTextViewRegular
+                            android:id="@+id/tv_date_movies"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/date_text_size" />
+                    </LinearLayout>
+
+
+                    <com.example.yshop.utils.MSPTextViewRegular
+                        android:id="@+id/MSPTextViewRegular4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/title_for_description"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/title_for_title_text_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ly_date"
+                        app:layout_constraintVertical_bias="0.00999999" />
+
+                    <com.example.yshop.utils.MSPTextViewRegular
+                        android:id="@+id/tv_overview"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/description_text_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.083"
+                        app:layout_constraintStart_toEndOf="@+id/MSPTextViewRegular4"
+                        app:layout_constraintTop_toTopOf="@+id/MSPTextViewRegular4"
+                        app:layout_constraintVertical_bias="0.012" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

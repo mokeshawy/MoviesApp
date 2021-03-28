@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.Constants
+import com.example.moviesapp.OptionBuilder
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentLatestMoviesBinding
 import com.example.moviesapp.latestmoviesfragment.LatestMoviesAdapter.Companion.BASE_URL
@@ -47,11 +48,13 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
             viewPager?.currentItem = 1
         }
 
+         // Show progress dialog
+         OptionBuilder.showProgressDialog(resources.getString(R.string.please_wait) , requireActivity())
          // Show response from API in recycler view
         latestMoviesViewModel.viewDataForLatestMovies()
         latestMoviesViewModel.moviesDetails.observe(viewLifecycleOwner, Observer {
             binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity() , this)
-            
+            OptionBuilder.hideProgressDialog()
         })
 
 
@@ -78,7 +81,6 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
 
     // OnClick for select movies open on details fragment
     override fun onClickListener( dataSet: Result , position: Int) {
-
         var movies = ViewPagerFragmentDirections.actionViewPagerFragmentToDetailsMoviesFragment(dataSet)
         findNavController().navigate(movies)
     }
