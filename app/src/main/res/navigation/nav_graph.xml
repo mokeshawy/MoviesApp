@@ -23,7 +23,8 @@
         tools:layout="@layout/fragment_view_pager" >
         <action
             android:id="@+id/action_viewPagerFragment_to_detailsMoviesFragment"
-            app:destination="@id/detailsMoviesFragment" />
+            app:destination="@id/detailsMoviesFragment"
+            app:enterAnim="@anim/from_right" />
     </fragment>
     <fragment
         android:id="@+id/latestMoviesFragment"
@@ -39,6 +40,10 @@
         android:id="@+id/detailsMoviesFragment"
         android:name="com.example.moviesapp.datailsmoviesfragment.DetailsMoviesFragment"
         android:label="fragment_details_movies"
-        tools:layout="@layout/fragment_details_movies" />
+        tools:layout="@layout/fragment_details_movies" >
+        <argument
+            android:name="moviesDetails"
+            app:argType="com.example.moviesapp.latestmoviesfragment.Result" />
+    </fragment>
 
 </navigation>

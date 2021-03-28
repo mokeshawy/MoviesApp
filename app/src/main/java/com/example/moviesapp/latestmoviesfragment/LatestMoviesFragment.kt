@@ -17,6 +17,7 @@ import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentLatestMoviesBinding
 import com.example.moviesapp.latestmoviesfragment.LatestMoviesAdapter.Companion.BASE_URL
 import com.example.moviesapp.operationroomdb.AppDataBase
+import com.example.moviesapp.viewpagerfragment.ViewPagerFragmentDirections
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -75,7 +76,10 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
             }
     }
 
-    override fun onClickListener() {
-        findNavController().navigate(R.id.action_viewPagerFragment_to_detailsMoviesFragment)
+    // OnClick for select movies open on details fragment
+    override fun onClickListener( dataSet: Result , position: Int) {
+
+        var movies = ViewPagerFragmentDirections.actionViewPagerFragmentToDetailsMoviesFragment(dataSet)
+        findNavController().navigate(movies)
     }
 }

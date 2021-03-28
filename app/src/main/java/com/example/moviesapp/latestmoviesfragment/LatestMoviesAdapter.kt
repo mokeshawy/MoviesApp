@@ -21,7 +21,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMoviesItemClickListener,
+class LatestMoviesAdapter(var dataSet: List<Result>,
+                          var onClickListener : OnMoviesItemClickListener,
                           var context: Context,
                           var onClick : OnClickListener) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
 
@@ -73,9 +74,9 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
         }
 
         // for open details fragment
-        fun initOnClickListener( action : OnClickListener){
+        fun initOnClickListener(  dataSet: Result , action : OnClickListener){
             binding.cardLayoutId.setOnClickListener {
-                action.onClickListener()
+                action.onClickListener( dataSet , adapterPosition)
             }
         }
     }
@@ -99,7 +100,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
         viewHolder.initialize(dataSet.get(position) , onClickListener)
 
         // Call function initOnClickListener
-        viewHolder.initOnClickListener(onClick)
+        viewHolder.initOnClickListener( dataSet.get(position) ,onClick)
 
         // Save check box for favorite select after off app and on again
         CoroutineScope(Dispatchers.IO).launch{
@@ -135,7 +136,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>, var onClickListener : OnMov
 
     // The interface for click on item open details fragment
     interface OnClickListener{
-        fun onClickListener()
+        fun onClickListener( dataSet: Result , position: Int)
     }
 
 

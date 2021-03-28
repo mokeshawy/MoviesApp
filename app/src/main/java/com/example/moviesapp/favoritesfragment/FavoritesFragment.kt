@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.R
 import com.example.moviesapp.databinding.FragmentFavoritesBinding
 
-class FavoritesFragment : Fragment() , FavoriteMoviesAdapter.OnClickListener {
+class FavoritesFragment : Fragment(){
 
     lateinit var binding    : FragmentFavoritesBinding
     val favoritesViewModel  : FavoritesFragmentViewModel by viewModels()
@@ -41,14 +41,10 @@ class FavoritesFragment : Fragment() , FavoriteMoviesAdapter.OnClickListener {
         // Call function for show data from room database
         favoritesViewModel.showFavData(requireActivity())
         favoritesViewModel.dataForFavMovies.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it , this , requireActivity())
+            binding.rcViewMoviesId.adapter = FavoriteMoviesAdapter(it , requireActivity())
         })
 
         // Call fun for refresh
         favoritesViewModel.refresh(requireActivity() , binding.swipeLayout)
-    }
-
-    override fun onClick() {
-        findNavController().navigate(R.id.action_viewPagerFragment_to_detailsMoviesFragment)
     }
 }

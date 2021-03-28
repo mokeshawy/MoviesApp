@@ -1,5 +1,7 @@
 package com.example.moviesapp.latestmoviesfragment
 
+import java.io.Serializable
+
 data class LatestMoviesResponse(
     val page: Int,
     val results: List<Result>,
@@ -22,4 +24,4 @@ data class Result(
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Int
-)
+) : Serializable

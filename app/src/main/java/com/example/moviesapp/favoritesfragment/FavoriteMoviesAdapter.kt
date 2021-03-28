@@ -17,17 +17,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> ,
-                             var onClick : OnClickListener ,
                              var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
 
     class ViewHolder(var binding: FavoriteMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun initOnClick( action : OnClickListener){
-
-            binding.cardLayoutId.setOnClickListener {
-                action.onClick()
-            }
-        }
 
     }
 
@@ -48,9 +41,6 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> ,
 
         viewHolder.binding.tvTitleLatestMoviesId.text = dataSet[position].title
         Picasso.get().load(dataSet[position].poster_path).into(viewHolder.binding.ivPosterMoviesId)
-
-        // Call fun initOnClick
-        viewHolder.initOnClick(onClick)
 
         // Save check box for favorite select after off app and on again
         CoroutineScope(Dispatchers.IO).launch{
@@ -90,8 +80,4 @@ class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> ,
 
     // Return the size of your dataSet (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
-
-    interface OnClickListener{
-        fun onClick()
-    }
 }
