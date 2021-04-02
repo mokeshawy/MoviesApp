@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import androidx.viewpager2.widget.ViewPager2
 import com.example.moviesapp.Constants
@@ -23,7 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickListener , LatestMoviesAdapter.OnClickListener{
+class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickListener {
 
     lateinit var binding        : FragmentLatestMoviesBinding
     val latestMoviesViewModel   : LatestMoviesFragmentViewModel by viewModels()
@@ -53,14 +54,15 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
          // Show response from API in recycler view
         latestMoviesViewModel.viewDataForLatestMovies()
         latestMoviesViewModel.moviesDetails.observe(viewLifecycleOwner, Observer {
-            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity() , this)
+            binding.rcViewMoviesId.adapter = LatestMoviesAdapter(it.results , this , requireActivity())
             OptionBuilder.hideProgressDialog()
         })
 
 
     }
 
-    override fun onMoviesClick(dataSet: com.example.moviesapp.latestmoviesfragment.Result, position: Int) {
+    override fun onMoviesClick(viewHolder : LatestMoviesAdapter.ViewHolder, dataSet: com.example.moviesapp.latestmoviesfragment.Result, position: Int) {
+
             CoroutineScope(Dispatchers.IO).async {
 
                 var dataBase : AppDataBase = Room.databaseBuilder(requireActivity() , AppDataBase::class.java, Constants.ROOM_DB_NAME).build()
@@ -77,11 +79,12 @@ class LatestMoviesFragment : Fragment() , LatestMoviesAdapter.OnMoviesItemClickL
                     }
                 }
             }
-    }
 
-    // OnClick for select movies open on details fragment
-    override fun onClickListener( dataSet: Result , position: Int) {
-        var movies = ViewPagerFragmentDirections.actionViewPagerFragmentToDetailsMoviesFragment(dataSet)
-        findNavController().navigate(movies)
+        // Go details page
+        viewHolder.binding.cardLayoutId.setOnClickListener {
+
+            var movies = ViewPagerFragmentDirections.actionViewPagerFragmentToDetailsMoviesFragment(dataSet)
+            findNavController().navigate(movies)
+        }
     }
 }

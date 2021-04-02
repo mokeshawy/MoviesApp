@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="detailsVarModel"
+            type="com.example.moviesapp.datailsmoviesfragment.DetailsViewModel" />
     </data>
 
     <ScrollView

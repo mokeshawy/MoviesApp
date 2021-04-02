@@ -23,8 +23,7 @@ import kotlinx.coroutines.launch
 
 class LatestMoviesAdapter(var dataSet: List<Result>,
                           var onClickListener : OnMoviesItemClickListener,
-                          var context: Context,
-                          var onClick : OnClickListener) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
+                          var context: Context ) : RecyclerView.Adapter<LatestMoviesAdapter.ViewHolder>() {
 
     // BaseUrl fro operation photo
     companion object{
@@ -39,7 +38,9 @@ class LatestMoviesAdapter(var dataSet: List<Result>,
 
 
         // Initialize fun for data from model
-        fun initialize( dataSet: Result , action : OnMoviesItemClickListener ){
+        fun initialize( viewHolder : RecyclerView.ViewHolder , dataSet: Result , action : OnMoviesItemClickListener ){
+
+            action.onMoviesClick(viewHolder as ViewHolder, dataSet , adapterPosition)
 
             binding.toggleImButtonId.isChecked = checkBoxStateArray.get(adapterPosition , false)
 
@@ -51,7 +52,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>,
 
                 if(! checkBoxStateArray.get(adapterPosition , false)){
 
-                    action.onMoviesClick(dataSet , adapterPosition)
+
                     binding.toggleImButtonId.isChecked = true
                     checkBoxStateArray.put(adapterPosition , true)
 
@@ -72,13 +73,6 @@ class LatestMoviesAdapter(var dataSet: List<Result>,
                 }
             }
         }
-
-        // for open details fragment
-        fun initOnClickListener(  dataSet: Result , action : OnClickListener){
-            binding.cardLayoutId.setOnClickListener {
-                action.onClickListener( dataSet , adapterPosition)
-            }
-        }
     }
 
     // Create new views (invoked by the layout manager)
@@ -97,10 +91,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>,
 
 
         // Call function initialize
-        viewHolder.initialize(dataSet.get(position) , onClickListener)
-
-        // Call function initOnClickListener
-        viewHolder.initOnClickListener( dataSet.get(position) ,onClick)
+        viewHolder.initialize( viewHolder , dataSet.get(position) , onClickListener)
 
         // Save check box for favorite select after off app and on again
         CoroutineScope(Dispatchers.IO).launch{
@@ -131,13 +122,7 @@ class LatestMoviesAdapter(var dataSet: List<Result>,
 
     // The interface for click on the toggle button
     interface OnMoviesItemClickListener{
-        fun onMoviesClick(dataSet : Result , position: Int)
+        fun onMoviesClick( viewHolder : ViewHolder , dataSet : Result , position: Int)
     }
-
-    // The interface for click on item open details fragment
-    interface OnClickListener{
-        fun onClickListener( dataSet: Result , position: Int)
-    }
-
 
 }

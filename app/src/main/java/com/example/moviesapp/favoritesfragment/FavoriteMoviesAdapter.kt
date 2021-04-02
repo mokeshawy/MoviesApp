@@ -16,8 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> ,
-                             var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
+class FavoriteMoviesAdapter (private val dataSet: List<MoviesModel> , var context: Context) : RecyclerView.Adapter<FavoriteMoviesAdapter.ViewHolder>() {
 
     class ViewHolder(var binding: FavoriteMoviesItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
